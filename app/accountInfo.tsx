@@ -1,10 +1,11 @@
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, View } from "react-native";
+
 
 export default function AccountInfo() {
+  
   return (
-    <SafeAreaView>
-      <Text>Account info</Text>
-    </SafeAreaView>
-  );
+    <View>
+      <Text>accont</Text>
+    </View>
+  )
 }
