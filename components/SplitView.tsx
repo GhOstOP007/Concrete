@@ -6,48 +6,60 @@ import ImageCard from "./ImageCard";
 import { useState } from "react";
 import { DownloadClick } from "./BottomSheet";
 
-export default function ({ wallpapers }: { wallpapers: Wallpaper[] }) {
-  const [selectedWall, setIsSelectedWall] = useState<null | Wallpaper>(null);
+export default function ({
+  wallpapers,
+  onScroll,
+}: {
+  wallpapers: Wallpaper[];
+  onScroll: (yOffset: number) => void;
+}) {
+  const [selectedWall, setSelectedWall] = useState<null | Wallpaper>(null);
   return (
     <>
-      <ThemedView style={styles.container}>
-        <ThemedView style={styles.innerContainer}>
-          <FlatList
-            data={wallpapers.filter((_, index) => index % 2 === 0)}
-            renderItem={({ item }) => (
-              <View style={styles.imageContainer}>
-                <ImageCard
-                  wallpaper={item}
-                  onPress={() => {
-                    setIsSelectedWall(item);
-                  }}
-                />
-              </View>
-            )}
-            keyExtractor={(item) => item.name}
-          />
-        </ThemedView>
-        <ThemedView style={styles.innerContainer}>
-          <FlatList
-            data={wallpapers.filter((_, index) => index % 2 === 1)}
-            renderItem={({ item }) => (
-              <View style={styles.imageContainer}>
-                <ImageCard
-                  wallpaper={item}
-                  onPress={() => {
-                    setIsSelectedWall(item);
-                  }}
-                />
-              </View>
-            )}
-            keyExtractor={(item) => item.name}
-          />
-        </ThemedView>
-      </ThemedView>
+      <FlatList
+      onScroll={(e)=>{
+        let yOffset=e.nativeEvent.contentOffset.y/1;
+        onScroll?.(yOffset);
+      }}
+        data={wallpapers
+          .map((_, index) =>
+            index % 2 === 0 ? [wallpapers[index], wallpapers[index + 1]] : null
+          )
+          .filter(Boolean)}
+        renderItem={({ item: [first, second] }) => (
+          <ThemedView style={styles.container}>
+            <ThemedView style={styles.innerContainer}>
+              {first && (
+                <View style={styles.imageContainer}>
+                  <ImageCard
+                    wallpaper={first}
+                    onPress={() => {
+                      setSelectedWall(first);
+                    }}
+                  />
+                </View>
+              )}
+            </ThemedView>
+            <ThemedView style={styles.innerContainer}>
+              {second && (
+                <View style={styles.imageContainer}>
+                  <ImageCard
+                    wallpaper={second}
+                    onPress={() => {
+                      setSelectedWall(second);
+                    }}
+                  />
+                </View>
+              )}
+            </ThemedView>
+          </ThemedView>
+        )}
+        keyExtractor={(item) => item[0]?.name || Math.random().toString()}
+      />
       {selectedWall && (
         <DownloadClick
           wallpaper={selectedWall}
-          onClose={() => setIsSelectedWall(null)}
+          onClose={() => setSelectedWall(null)}
         />
       )}
     </>

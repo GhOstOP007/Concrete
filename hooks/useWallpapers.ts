@@ -122,7 +122,6 @@ export function useWallpapers(): Wallie[] {
             liked: false,
             suggested: true,
             library: false
-        }
-        
+        },
     ];
 }

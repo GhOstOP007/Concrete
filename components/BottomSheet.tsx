@@ -32,36 +32,37 @@ export const DownloadClick = ({
       handleIndicatorStyle={{ display: "none" }}
       handleStyle={{ display: "none" }}
     >
-      <BottomSheetView style={styles.contentContainer}>
-        <Image style={styles.image} source={{ uri: wallpaper.url }} />
-        <View style={styles.topbar}>
-          <Pressable onPress={onClose}>
-            <Ionicons
-              name={"close"}
-              size={24}
-              color={theme === "light" ? Colors.light.icon : Colors.dark.icon}
-            />
-          </Pressable>
-          <View style={styles.rightTopbar}>
-
-          <Ionicons
-            name={"heart"}
-            size={24}
-            color={theme === "light" ? Colors.light.icon : Colors.dark.icon}
-            />
-          <Ionicons
-            name={"share"}
-            size={24}
-            color={theme === "light" ? Colors.light.icon : Colors.dark.icon}
-            style={{ paddingRight: 5 }}
-            />
+        <BottomSheetView style={styles.contentContainer}>
+      <ThemedView style={{flex:1 ,borderTopLeftRadius:15, borderTopRightRadius:15}}>
+          <Image style={styles.image} source={{ uri: wallpaper.url }} />
+          <View style={styles.topbar}>
+            <Pressable onPress={onClose}>
+              <Ionicons
+                name={"close"}
+                size={24}
+                color={theme === "light" ? Colors.light.icon : Colors.dark.icon}
+              />
+            </Pressable>
+            <View style={styles.rightTopbar}>
+              <Ionicons
+                name={"heart"}
+                size={24}
+                color={theme === "light" ? Colors.light.icon : Colors.dark.icon}
+              />
+              <Ionicons
+                name={"share"}
+                size={24}
+                color={theme === "light" ? Colors.light.icon : Colors.dark.icon}
+                style={{ paddingRight: 5 }}
+              />
             </View>
-        </View>
-        <View style={styles.textContainer}>
-          <ThemedText style={styles.text}>{wallpaper.name}</ThemedText>
-        </View>
-        <DownloadButton />
-      </BottomSheetView>
+          </View>
+          <ThemedView style={styles.textContainer}>
+            <ThemedText style={styles.text}>{wallpaper.name}</ThemedText>
+          </ThemedView>
+          <DownloadButton />
+      </ThemedView>
+        </BottomSheetView>
     </BottomSheet>
   );
 };
@@ -116,10 +117,10 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
   },
-  rightTopbar:{
-    flexDirection:"row",
-    justifyContent:'center',
-    gap:'5'
+  rightTopbar: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: "5",
   },
   textContainer: {
     width: "100%",

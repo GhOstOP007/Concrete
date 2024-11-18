@@ -5,7 +5,7 @@ export default function AccountInfo() {
   
   return (
     <View>
-      <Text>accont</Text>
+      <Text>account</Text>
     </View>
   )
 }
